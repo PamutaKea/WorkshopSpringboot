@@ -25,4 +25,10 @@ public class UserController {
     public  UsersResponse getUserById(@PathVariable int id){
         return new UsersResponse(id,"User "+id);
     }
+
+    @PostMapping ("/users")
+    public UsersResponse createNewUser(@RequestBody NewUserRequest request){
+        return new UsersResponse(0,request.getName()+request.getAge());
+    }
+
 }
