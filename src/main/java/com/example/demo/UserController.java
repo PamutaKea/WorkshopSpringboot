@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -8,6 +9,18 @@ import java.util.List;
 @RestController
 public class UserController {
 
+    @Autowired
+    private  UserRepository userRepository;
+    @PostMapping ("/users")
+    public UsersResponse createNewUser(@RequestBody NewUserRequest request){
+        // Validate input
+        // Create new user into database =>
+        User user = new User();
+        user.setName(request.getName());
+        user.setAge(request.getAge());
+        user=userRepository.save(user);
+        return new UsersResponse(user.getId(),request.getName()+request.getAge());
+    }
     @GetMapping("/users")
     public PagingResponse getAllUser(
             @RequestParam (defaultValue = "1") int page,
@@ -26,11 +39,6 @@ public class UserController {
         return new UsersResponse(id,"User "+id);
     }
 
-    @PostMapping ("/users")
-    public UsersResponse createNewUser(@RequestBody NewUserRequest request){
-        // Validate input
-        // Create new user into database =>
-        return new UsersResponse(0,request.getName()+request.getAge());
-    }
+
 
 }
