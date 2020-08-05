@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -28,8 +30,12 @@ public class UserController {
             @RequestParam (name = "item_per_page" ,defaultValue = "10") int itemPerPage) {
         PagingResponse pagingResponse = new PagingResponse(page, itemPerPage);
         List<UsersResponse> usersResponseList = new ArrayList<>();
+        // Pagination with Spring Data JPA
+        // ทดสอบโดย post ข้อมูล แล้วดูผลที่ http://localhost:8080/users?page=0&item_per_page=5
+        Pageable pageable = PageRequest.of(page, itemPerPage);
         // get data from repository
-        Iterable<User> users = (List<User>) userRepository.findAll();
+        Iterable<User> users = userRepository.findAll(pageable);
+
         for (User user: users){
             usersResponseList.add(new UsersResponse(user.getId(), user.getName(), user.getAge()));
         }
