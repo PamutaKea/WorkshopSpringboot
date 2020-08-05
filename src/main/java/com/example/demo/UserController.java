@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -16,5 +18,10 @@ public class UserController {
         usersResponseList.add(new UsersResponse(2,"User 2"));
         usersResponseList.add(new UsersResponse(3,"User 3"));
         return usersResponseList;
+    }
+
+    @GetMapping("/users/{id}")
+    public  UsersResponse getUserById(@PathVariable int id){
+        return new UsersResponse(id,"User "+id);
     }
 }
