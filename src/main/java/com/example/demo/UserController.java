@@ -31,7 +31,7 @@ public class UserController {
         // get data from repository
         Iterable<User> users = (List<User>) userRepository.findAll();
         for (User user: users){
-            usersResponseList.add(new UsersResponse(user.getId(),user.getName()));
+            usersResponseList.add(new UsersResponse(user.getId(), user.getName(), user.getAge()));
         }
         pagingResponse.setUsersResponse(usersResponseList);
         return pagingResponse;
