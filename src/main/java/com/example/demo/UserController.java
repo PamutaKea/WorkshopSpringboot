@@ -27,9 +27,11 @@ public class UserController {
             @RequestParam (name = "item_per_page" ,defaultValue = "10") int itemPerPage) {
         PagingResponse pagingResponse = new PagingResponse(page, itemPerPage);
         List<UsersResponse> usersResponseList = new ArrayList<>();
-        usersResponseList.add(new UsersResponse(1, "User 1"));
-        usersResponseList.add(new UsersResponse(2, "User 2"));
-        usersResponseList.add(new UsersResponse(3, "User 3"));
+        // get data from repository
+        Iterable<User> users = (List<User>) userRepository.findAll();
+        for (User user: users){
+            usersResponseList.add(new UsersResponse(user.getId(),user.getName()));
+        }
         pagingResponse.setUsersResponse(usersResponseList);
         return pagingResponse;
     }
