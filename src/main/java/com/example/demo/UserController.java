@@ -28,6 +28,8 @@ public class UserController {
 
     @PostMapping ("/users")
     public UsersResponse createNewUser(@RequestBody NewUserRequest request){
+        // Validate input
+        // Create new user into database =>
         return new UsersResponse(0,request.getName()+request.getAge());
     }
 
